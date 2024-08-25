@@ -142,3 +142,5 @@ fabric.properties
 /build
 /captures
 .cxx
+/.idea/
+.idea/
