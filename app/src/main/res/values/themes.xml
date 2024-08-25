@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- Custom App Theme -->
+<style name="Theme.AudioPlayer" parent="Theme.AppCompat.NoActionBar">
+    <!-- Ensure this is set -->
+    <item name="colorSurface">@color/black</item>
+
+    <item name="android:windowBackground">@color/colorPrimary</item>
+    <item name="colorPrimary">@color/colorPrimaryDark</item>
+
+    <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--        <item name="colorAccent">@color/colorAccent</item>-->
+</style>
+</resources>
