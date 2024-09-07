@@ -79,6 +79,7 @@ dependencies {
     // To use constraintlayout in compose
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
 
     // TEST
     testImplementation(libs.junit)
