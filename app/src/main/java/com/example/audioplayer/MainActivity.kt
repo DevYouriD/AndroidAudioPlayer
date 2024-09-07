@@ -9,9 +9,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.view.View
 import android.widget.ImageButton
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +31,18 @@ class MainActivity : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
     private val permissionRequestId = 1
     private var isPlaying = false
+    private lateinit var playPauseButton: ImageButton
+    private lateinit var seekBar: SeekBar
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val singlePermissionBtn = findViewById<ImageButton>(R.id.playButton)
+        playPauseButton = findViewById<ImageButton>(R.id.playButton)
+        seekBar = findViewById(R.id.progressBar)
+        handler = Handler(Looper.getMainLooper())
         val myTextView = findViewById<TextView>(R.id.textView2)
 
         val file = "example.mp3"
@@ -44,19 +53,41 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer().apply {
             try {
                 setDataSource(path)
-                prepare()  // Prepare the MediaPlayer synchronously
+                prepare()
+                seekBar.max = duration
             } catch (e: Exception) {
                 println("Error initializing MediaPlayer: $e")
             }
         }
 
-        singlePermissionBtn.setOnClickListener {
+        playPauseButton.setOnClickListener {
             if (isPermissionGranted()) {
                 playPause()
             } else {
                 showPermissionRationaleDialog()
             }
         }
+
+        // Update SeekBar as the song progresses
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer?.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                // Optional: Pause updating the SeekBar while the user is adjusting it
+                handler.removeCallbacks(runnable)
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // Resume updating the SeekBar after the user finishes adjusting it
+                mediaPlayer?.let {
+                    handler.postDelayed(runnable, 1000)
+                }
+            }
+        })
     }
 
     // Main functionality
@@ -66,10 +97,24 @@ class MainActivity : AppCompatActivity() {
 
         if (isPlaying) {
             mediaPlayer?.pause()
+            playPauseButton.setImageResource(R.drawable.circle_play_button)
+            handler.removeCallbacks(runnable) // Stop updating the SeekBar
         } else {
             mediaPlayer?.start()
+            playPauseButton.setImageResource(R.drawable.circle_pause_button)
+            updateSeekBar()
         }
         isPlaying = !isPlaying
+    }
+
+    private fun updateSeekBar() {
+        mediaPlayer?.let { player ->
+            seekBar.progress = player.currentPosition
+            runnable = Runnable {
+                updateSeekBar()
+            }
+            handler.postDelayed(runnable, 1000)
+        }
     }
 
     private fun isPermissionGranted(): Boolean {
@@ -85,7 +130,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-                // Optionally handle the cancellation
             }
             .create()
             .show()
@@ -120,7 +164,6 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-                // Optionally handle the cancellation
             }
             .create()
             .show()
@@ -197,5 +240,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         mediaPlayer?.release()
         mediaPlayer = null
+        handler.removeCallbacks(runnable)
     }
+    
 }
