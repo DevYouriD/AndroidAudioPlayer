@@ -1,4 +1,4 @@
-package com.example.audioplayer
+package com.example.audioplayer.views
 
 import android.content.Intent
 import android.media.MediaMetadataRetriever
@@ -13,6 +13,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.audioplayer.MusicAdapter
+import com.example.audioplayer.MusicItem
+import com.example.audioplayer.R
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.Locale

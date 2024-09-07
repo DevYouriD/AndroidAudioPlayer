@@ -1,4 +1,4 @@
-package com.example.audioplayer
+package com.example.audioplayer.views
 
 import android.app.AlertDialog
 import android.content.Context
@@ -14,6 +14,9 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.audioplayer.MediaPlayerManager
+import com.example.audioplayer.PermissionHelper
+import com.example.audioplayer.R
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MainActivity : AppCompatActivity() {
@@ -82,7 +85,9 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.handlePermissionResult(requestCode, grantResults,
             { mediaPlayerManager.playPause(findViewById(R.id.playButton)) },
-            { permissionHelper.showPermissionRationaleDialog { mediaPlayerManager.playPause(findViewById(R.id.playButton)) } }
+            { permissionHelper.showPermissionRationaleDialog { mediaPlayerManager.playPause(findViewById(
+                R.id.playButton
+            )) } }
         )
     }
 
