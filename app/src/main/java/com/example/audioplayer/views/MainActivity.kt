@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         permissionHelper = PermissionHelper(this)
         mediaPlayerManager = MediaPlayerManager()
 
-        val file = "Example.mp3"
+        val file = "Example2.mp3"
         val path = Environment.getExternalStorageDirectory().toString() + "/Music/" + file
         currentSongTitle.text = file
 
@@ -85,9 +85,10 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionHelper.handlePermissionResult(requestCode, grantResults,
             { mediaPlayerManager.playPause(findViewById(R.id.playButton)) },
-            { permissionHelper.showPermissionRationaleDialog { mediaPlayerManager.playPause(findViewById(
-                R.id.playButton
-            )) } }
+            { permissionHelper.showPermissionRationaleDialog {
+                mediaPlayerManager.playPause(findViewById(
+                R.id.playButton)) }
+            }
         )
     }
 
@@ -116,4 +117,3 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 }
-

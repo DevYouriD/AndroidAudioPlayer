@@ -33,6 +33,7 @@ Through this app I tried to make these things as easy as possible. There is one 
 ## Learning Goals
 - Permission management
 - Media Player usage
+- State management
 
 ## Tools/ Technologies used
 - Kotlin
