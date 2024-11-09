@@ -25,10 +25,12 @@ Through this app I tried to make these things as easy as possible. There is one 
   - [ ] Clean up code
     - [ ] Implement code quality plugins (e.g. checkstyle, pmd, spotbugs)
     - [ ] Scan project with sonarlint/ sonarqube
-- [ ] Post-poc idea's
+- [ ] Post-mvp idea's
   - [ ] Custom playlist functionality
   - [ ] Widget support
   - [ ] Control via bluetooth device support
+  - [ ] Add image support (user uploads their own image, gets saved on device and relationship between
+    image and file is saved in json file)
 
 ## Learning Goals
 - Permission management

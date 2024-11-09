@@ -84,8 +84,7 @@ class SelectionActivity : AppCompatActivity() {
             if (audioFiles != null) {
                 for (file in audioFiles) {
                     val fileName = file.name
-                    val fileSize =
-                        "${file.length() / 1024} KB"
+                    val fileSize = "${file.length() / 1024} KB"
                     val dateModified = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
                         .format(Date(file.lastModified()))
 
@@ -98,59 +97,59 @@ class SelectionActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
 
-        fun retrieveMetaData(file: String): Map<String, String?> {
-            val metadataRetriever = MediaMetadataRetriever()
-            val metadataMap = mutableMapOf<String, String?>()
-            val path = Environment.getExternalStorageDirectory().toString() + "/Music/" + file
+    fun retrieveMetaData(file: String): Map<String, String?> {
+        val metadataRetriever = MediaMetadataRetriever()
+        val metadataMap = mutableMapOf<String, String?>()
+        val path = Environment.getExternalStorageDirectory().toString() + "/Music/" + file
 
-            try {
-                metadataRetriever.setDataSource(path)
+        try {
+            metadataRetriever.setDataSource(path)
 
-                metadataMap["Title"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                metadataMap["Artist"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-                metadataMap["Album"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
-                metadataMap["Genre"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE)
-                metadataMap["Duration (ms)"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                metadataMap["Year"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
-                metadataMap["Album Artist"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST)
-                metadataMap["Composer"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPOSER)
-                metadataMap["Disc Number"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER)
-                metadataMap["Track Number"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CD_TRACK_NUMBER)
-                metadataMap["Compilation"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPILATION)
-                metadataMap["Writer"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_WRITER)
-                metadataMap["Location"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
-                metadataMap["MIME Type"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE)
+            metadataMap["Title"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+            metadataMap["Artist"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+            metadataMap["Album"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
+            metadataMap["Genre"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE)
+            metadataMap["Duration (ms)"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            metadataMap["Year"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
+            metadataMap["Album Artist"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUMARTIST)
+            metadataMap["Composer"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPOSER)
+            metadataMap["Disc Number"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DISC_NUMBER)
+            metadataMap["Track Number"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CD_TRACK_NUMBER)
+            metadataMap["Compilation"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_COMPILATION)
+            metadataMap["Writer"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_WRITER)
+            metadataMap["Location"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
+            metadataMap["MIME Type"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE)
 
-                // Optional: Image metadata if applicable
-                metadataMap["HasImage"] =
-                    metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_HAS_IMAGE)
+            // Optional: Image metadata if applicable
+            metadataMap["HasImage"] =
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_HAS_IMAGE)
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                metadataRetriever.release()
-            }
-
-            for ((key, value) in metadataMap) {
-                println("$key: $value")
-            }
-
-            return metadataMap
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            metadataRetriever.release()
         }
+
+        for ((key, value) in metadataMap) {
+            println("$key: $value")
+        }
+
+        return metadataMap
     }
 }

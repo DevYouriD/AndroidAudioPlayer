@@ -1,11 +1,13 @@
 package com.example.audioplayer
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.audioplayer.views.MainActivity
 
 class MusicAdapter(private val musicList: List<MusicItem>) : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
@@ -24,17 +26,19 @@ class MusicAdapter(private val musicList: List<MusicItem>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
         val musicFile = musicList[position]
 
-        // Set the song title
+        // Set list item attributes
         holder.songTitle.text = musicFile.title
-
-        // Set the date and time added (formatted as you like)
         holder.dateAdded.text = "Date Added: ${musicFile.dateAdded}"
-
-        // Set the file size (formatted)
         holder.fileSize.text = "File Size: ${musicFile.size}"
-
-        // Set the music icon (you can load an actual album art here if available)
         holder.musicIcon.setImageResource(R.drawable.music_note)
+
+        // Navigate to main and start playing selected song on click
+        holder.itemView.setOnClickListener {
+            val context = it.context
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("songTitle", musicFile.title)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

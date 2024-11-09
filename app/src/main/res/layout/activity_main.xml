@@ -9,18 +9,21 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="130dp"
 
-        android:text="I AM A SONG TITLE"
-        android:textSize="20dp"
+        android:text="Press the 📁 button to play an audio file"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:maxWidth="360dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/collectionButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
@@ -44,7 +47,6 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.515"
         app:srcCompat="@drawable/cover_placeholder" />
 
     <SeekBar
@@ -52,7 +54,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="339dp"
         android:layout_height="28dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="28dp"
         android:max="100"
         android:progress="0"
         app:layout_constraintBottom_toTopOf="@+id/playButton"
@@ -65,7 +67,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="60dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,31 +78,31 @@
         app:tint="@android:color/white" />
 
     <ImageButton
-        android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="84dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/next_button"
-        app:tint="@android:color/white" />
-
-    <ImageButton
         android:id="@+id/button3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="60dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/previous_button"
+        app:tint="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/button2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="60dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/next_button"
         app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -32,15 +33,25 @@ class MainActivity : AppCompatActivity() {
         val collectionButton = findViewById<ImageButton>(R.id.collectionButton)
         val playPauseButton = findViewById<ImageButton>(R.id.playButton)
         val seekBar = findViewById<SeekBar>(R.id.progressBar)
+        val file = intent.getStringExtra("songTitle")
 
         permissionHelper = PermissionHelper(this)
         mediaPlayerManager = MediaPlayerManager()
 
-        val file = "Example2.mp3"
-        val path = Environment.getExternalStorageDirectory().toString() + "/Music/" + file
-        currentSongTitle.text = file
+        if (file != null) {
+            val path = Environment.getExternalStorageDirectory().toString() + "/Music/" + file
 
-        mediaPlayerManager.initializeMediaPlayer(path, seekBar)
+            // Only display first 10 characters of a song title to prevent visual bugs
+            val truncatedTitle = if (file.length > 30) {
+                file.take(30) + "..."
+            } else {
+                file
+            }
+
+            currentSongTitle.text = truncatedTitle
+            mediaPlayerManager.initializeMediaPlayer(path, seekBar)
+            mediaPlayerManager.playPause(playPauseButton)
+        }
 
         playPauseButton.setOnClickListener {
             if (permissionHelper.isPermissionGranted()) {
