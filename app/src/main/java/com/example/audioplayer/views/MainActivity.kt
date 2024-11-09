@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Navigate to selection page
-        collectionButton.setOnClickListener {
+        handleButtonClickWithPermission(collectionButton) {
             mediaPlayerManager.release()
             val intent = Intent(this, SelectionActivity::class.java)
             startActivity(intent)

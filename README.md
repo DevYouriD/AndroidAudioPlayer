@@ -14,9 +14,9 @@ Through this app I tried to make these things as easy as possible. There is one 
   - [x] Figure out how to access file metadata
   - [x] Figure out MediaPlayer logic
   - [ ] 
-- [ ] Storage?
-  - [ ] 
-  - [ ] 
+- [ ] Permissions
+  - [x] Implement permission logic
+  - [ ] Change permission logic to trigger when app is opened for the first time (not on button click)
 - [ ] Design
   - [ ] Implement custom app icon
   - [ ] 
