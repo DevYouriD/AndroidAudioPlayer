@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -51,14 +50,14 @@ class MainActivity : AppCompatActivity() {
             currentSongTitle.text = truncatedTitle
             mediaPlayerManager.initializeMediaPlayer(path, seekBar)
             mediaPlayerManager.playPause(playPauseButton)
-        }
 
-        playPauseButton.setOnClickListener {
-            if (permissionHelper.isPermissionGranted()) {
-                mediaPlayerManager.playPause(playPauseButton)
-            } else {
-                permissionHelper.showPermissionRationaleDialog {
+            playPauseButton.setOnClickListener {
+                if (permissionHelper.isPermissionGranted()) {
                     mediaPlayerManager.playPause(playPauseButton)
+                } else {
+                    permissionHelper.showPermissionRationaleDialog {
+                        mediaPlayerManager.playPause(playPauseButton)
+                    }
                 }
             }
         }
@@ -80,11 +79,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        // Navigate to selection page
         collectionButton.setOnClickListener {
             val intent = Intent(this, SelectionActivity::class.java)
             startActivity(intent)
         }
 
+        // Modify back-button behavior
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 showExitPopup(this@MainActivity)

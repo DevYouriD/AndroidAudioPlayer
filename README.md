@@ -50,7 +50,7 @@ Through this app I tried to make these things as easy as possible. There is one 
 src
 ├── main
 │   ├── java
-│   │   └── com.example.chatapp
+│   │   └── com.example.musicplayer
 │   │       ├── ui
 │   │       │   ├── activity
 │   │       │   ├── fragment
@@ -74,7 +74,7 @@ src
 │   └── kotlin
 └── test
     └── java
-        └── com.example.chatapp
+        └── com.example.musicplayer
             ├── ui
             ├── data
             └── ChatAppTests.kt
