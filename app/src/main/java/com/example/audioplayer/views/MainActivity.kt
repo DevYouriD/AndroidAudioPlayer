@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
-                        mediaPlayerManager.seekTo(progress)
                         elapsedTimeTextView.text = formatTime(progress)
                     }
                 }
@@ -83,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    mediaPlayerManager.seekTo(seekBar?.progress ?: 0)
+                    val progress = seekBar?.progress ?: 0
+                    mediaPlayerManager.seekTo(progress)
                     mediaPlayerManager.handler.postDelayed(mediaPlayerManager.runnable, 1000)
                 }
             })
