@@ -28,12 +28,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val currentSongTitle = findViewById<TextView>(R.id.textView2)
+        val currentSongTitle = findViewById<TextView>(R.id.currentSongTitleTextView)
+        val elapsedTimeTextView = findViewById<TextView>(R.id.elapsedTimeTextView)
+        val totalDurationTextView = findViewById<TextView>(R.id.totalDurationTextView)
+
         val collectionButton = findViewById<ImageButton>(R.id.collectionButton)
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val playPauseButton = findViewById<ImageButton>(R.id.playButton)
         val forwardButton = findViewById<ImageButton>(R.id.forwardButton)
+
         val seekBar = findViewById<SeekBar>(R.id.progressBar)
+
         val file = intent.getStringExtra("songTitle")
 
         permissionHelper = PermissionHelper(this)
@@ -53,15 +58,23 @@ class MainActivity : AppCompatActivity() {
             mediaPlayerManager.initializeMediaPlayer(path, seekBar)
             mediaPlayerManager.playPause(playPauseButton)
 
-            // Back, Play/ Pause and Forward button behavior
+            val totalDuration = mediaPlayerManager.getTotalDuration()
+            totalDurationTextView.text = formatTime(totalDuration)
+
+            mediaPlayerManager.setOnProgressUpdateListener { currentTime ->
+                elapsedTimeTextView.text = formatTime(currentTime)
+            }
+
+            // Back, Play/Pause, and Forward button behavior
             handleButtonClickWithPermission(backButton) { mediaPlayerManager.back() }
-            handleButtonClickWithPermission(playPauseButton) { mediaPlayerManager.playPause(it) }
+            handleButtonClickWithPermission(playPauseButton) { mediaPlayerManager.playPause(playPauseButton) }
             handleButtonClickWithPermission(forwardButton) { mediaPlayerManager.forward() }
 
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
                         mediaPlayerManager.seekTo(progress)
+                        elapsedTimeTextView.text = formatTime(progress)
                     }
                 }
 
@@ -89,6 +102,12 @@ class MainActivity : AppCompatActivity() {
                 showExitPopup(this@MainActivity)
             }
         })
+    }
+
+    private fun formatTime(milliseconds: Int): String {
+        val minutes = (milliseconds / 1000) / 60
+        val seconds = (milliseconds / 1000) % 60
+        return String.format("%d:%02d", minutes, seconds)
     }
 
     private fun handleButtonClickWithPermission(button: ImageButton, action: (ImageButton) -> Unit) {

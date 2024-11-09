@@ -14,6 +14,8 @@ class MediaPlayerManager {
     lateinit var handler: Handler
     lateinit var runnable: Runnable
 
+    private var onProgressUpdateListener: ((Int) -> Unit)? = null
+
     fun initializeMediaPlayer(filePath: String, seekBar: SeekBar) {
         this.seekBar = seekBar
         handler = Handler(Looper.getMainLooper())
@@ -27,6 +29,14 @@ class MediaPlayerManager {
                 println("Error initializing MediaPlayer: $e")
             }
         }
+    }
+
+    fun setOnProgressUpdateListener(listener: (Int) -> Unit) {
+        onProgressUpdateListener = listener
+    }
+
+    fun getTotalDuration(): Int {
+        return mediaPlayer?.duration ?: 0
     }
 
     fun back() {
@@ -59,6 +69,7 @@ class MediaPlayerManager {
     private fun updateSeekBar() {
         mediaPlayer?.let { player ->
             seekBar.progress = player.currentPosition
+            onProgressUpdateListener?.invoke(player.currentPosition)
             runnable = Runnable {
                 updateSeekBar()
             }
