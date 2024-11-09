@@ -29,6 +29,13 @@ class MediaPlayerManager {
         }
     }
 
+    fun back() {
+        val currentPosition = mediaPlayer?.currentPosition ?: 0
+        val newPosition = (currentPosition - 10000).coerceAtLeast(0)
+        mediaPlayer?.seekTo(newPosition)
+        updateSeekBar()
+    }
+
     fun playPause(playPauseButton: ImageButton) {
         if (isPlaying) {
             mediaPlayer?.pause()
@@ -40,6 +47,13 @@ class MediaPlayerManager {
             updateSeekBar()
         }
         isPlaying = !isPlaying
+    }
+
+    fun forward() {
+        val currentPosition = mediaPlayer?.currentPosition ?: 0
+        val newPosition = (currentPosition + 10000).coerceAtMost(mediaPlayer?.duration ?: 0)
+        mediaPlayer?.seekTo(newPosition)
+        updateSeekBar()
     }
 
     private fun updateSeekBar() {

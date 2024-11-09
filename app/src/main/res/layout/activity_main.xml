@@ -78,7 +78,7 @@
         app:tint="@android:color/white" />
 
     <ImageButton
-        android:id="@+id/button3"
+        android:id="@+id/backButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
@@ -92,7 +92,7 @@
         app:tint="@android:color/white" />
 
     <ImageButton
-        android:id="@+id/button2"
+        android:id="@+id/forwardButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"

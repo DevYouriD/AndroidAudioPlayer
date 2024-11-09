@@ -30,7 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         val currentSongTitle = findViewById<TextView>(R.id.textView2)
         val collectionButton = findViewById<ImageButton>(R.id.collectionButton)
+        val backButton = findViewById<ImageButton>(R.id.backButton)
         val playPauseButton = findViewById<ImageButton>(R.id.playButton)
+        val forwardButton = findViewById<ImageButton>(R.id.forwardButton)
         val seekBar = findViewById<SeekBar>(R.id.progressBar)
         val file = intent.getStringExtra("songTitle")
 
@@ -51,33 +53,28 @@ class MainActivity : AppCompatActivity() {
             mediaPlayerManager.initializeMediaPlayer(path, seekBar)
             mediaPlayerManager.playPause(playPauseButton)
 
-            playPauseButton.setOnClickListener {
-                if (permissionHelper.isPermissionGranted()) {
-                    mediaPlayerManager.playPause(playPauseButton)
-                } else {
-                    permissionHelper.showPermissionRationaleDialog {
-                        mediaPlayerManager.playPause(playPauseButton)
+            // Back, Play/ Pause and Forward button behavior
+            handleButtonClickWithPermission(backButton) { mediaPlayerManager.back() }
+            handleButtonClickWithPermission(playPauseButton) { mediaPlayerManager.playPause(it) }
+            handleButtonClickWithPermission(forwardButton) { mediaPlayerManager.forward() }
+
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        mediaPlayerManager.seekTo(progress)
                     }
                 }
-            }
-        }
 
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    mediaPlayerManager.seekTo(progress)
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    mediaPlayerManager.handler.removeCallbacks(mediaPlayerManager.runnable)
                 }
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                mediaPlayerManager.handler.removeCallbacks(mediaPlayerManager.runnable)
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                mediaPlayerManager.seekTo(seekBar?.progress ?: 0)
-                mediaPlayerManager.handler.postDelayed(mediaPlayerManager.runnable, 1000)
-            }
-        })
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    mediaPlayerManager.seekTo(seekBar?.progress ?: 0)
+                    mediaPlayerManager.handler.postDelayed(mediaPlayerManager.runnable, 1000)
+                }
+            })
+        }
 
         // Navigate to selection page
         collectionButton.setOnClickListener {
@@ -92,6 +89,18 @@ class MainActivity : AppCompatActivity() {
                 showExitPopup(this@MainActivity)
             }
         })
+    }
+
+    private fun handleButtonClickWithPermission(button: ImageButton, action: (ImageButton) -> Unit) {
+        button.setOnClickListener {
+            if (permissionHelper.isPermissionGranted()) {
+                action(button)
+            } else {
+                permissionHelper.showPermissionRationaleDialog {
+                    action(button)
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
