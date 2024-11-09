@@ -57,8 +57,10 @@ class MediaPlayerManager {
     }
 
     fun release() {
-        mediaPlayer?.release()
-        mediaPlayer = null
-        handler.removeCallbacks(runnable)
+        if (mediaPlayer != null) {
+            mediaPlayer?.release()
+            mediaPlayer = null
+            handler.removeCallbacks(runnable)
+        }
     }
 }
