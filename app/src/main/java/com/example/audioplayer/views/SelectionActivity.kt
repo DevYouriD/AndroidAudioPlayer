@@ -71,7 +71,6 @@ class SelectionActivity : AppCompatActivity() {
     private fun listFilesInMusicDirectory() {
         try {
             val path = Environment.getExternalStorageDirectory().toString() + "/Music"
-            // println("\nPath: $path")
             val directory = File(path)
 
             // List files with allowed audio extensions
@@ -82,6 +81,8 @@ class SelectionActivity : AppCompatActivity() {
             }
 
             if (audioFiles != null) {
+                val initialSize = musicList.size
+
                 for (file in audioFiles) {
                     val fileName = file.name
                     val fileSize = "${file.length() / 1024} KB"
@@ -90,7 +91,7 @@ class SelectionActivity : AppCompatActivity() {
 
                     musicList.add(MusicItem(fileName, dateModified, fileSize))
                 }
-                musicAdapter.notifyDataSetChanged()
+                musicAdapter.notifyItemRangeInserted(initialSize, audioFiles.size)
             } else {
                 println("No audio files found")
             }

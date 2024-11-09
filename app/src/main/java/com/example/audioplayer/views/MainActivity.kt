@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.audioplayer.MediaPlayerManager
 import com.example.audioplayer.PermissionHelper
 import com.example.audioplayer.R
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MainActivity : AppCompatActivity() {
@@ -107,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     private fun formatTime(milliseconds: Int): String {
         val minutes = (milliseconds / 1000) / 60
         val seconds = (milliseconds / 1000) % 60
-        return String.format("%d:%02d", minutes, seconds)
+        return String.format(Locale.US ,"%d:%02d", minutes, seconds)
     }
 
     private fun handleButtonClickWithPermission(button: ImageButton, action: (ImageButton) -> Unit) {

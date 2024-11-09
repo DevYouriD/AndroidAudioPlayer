@@ -1,10 +1,14 @@
-# Simple Audio Player
-A simple player for audio files on your android device.
+# Android Audio Player
+A simple media player for audio files on your android device.
 
-## Description
-I started this project because I was using a different application to play audio files but got prompted to log in on every startup. I also did not like the layout and found the way to create playlists very unintuitive.
+## About
+I started this project because I was using a different application to play audio files but got 
+prompted to log in on every startup. I also did not like the layout and found the way to create 
+playlists very unintuitive.
 
-Through this app I tried to make these things as easy as possible. There is one designated directory on the android device where the user can store their audio files, and the application will scan this directory, detect the files and display them according to how the user likes.
+Through this app I tried to make these things as easy as possible. There is one designated 
+directory on the android device where the user can store their audio files, and the application 
+will scan this directory, detect the files and display them according to how the user likes.
 
 ## TODO
 - [ ] Audio Player
@@ -13,13 +17,11 @@ Through this app I tried to make these things as easy as possible. There is one 
   - [x] Figure out how to access files on device
   - [x] Figure out how to access file metadata
   - [x] Figure out MediaPlayer logic
-  - [ ] 
 - [ ] Permissions
   - [x] Implement permission logic
   - [ ] Change permission logic to trigger when app is opened for the first time (not on button click)
 - [ ] Design
   - [ ] Implement custom app icon
-  - [ ] 
 - [ ] Other
   - [x] Handle navigation between pages
   - [ ] Clean up code
@@ -35,7 +37,6 @@ Through this app I tried to make these things as easy as possible. There is one 
 ## Learning Goals
 - Permission management
 - Media Player usage
-- State management
 
 ## Tools/ Technologies used
 - Kotlin
